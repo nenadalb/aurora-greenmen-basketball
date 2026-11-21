@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aurora Greenmen Basketball · JV & Varsity · 2026–2027</title>
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0e5c34">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Greenmen">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+
+  <style>
+    :root {
+      --pine: #0e5c34;
+      --deep: #083d22;
+      --ink: #122018;
+      --muted: #5a6a60;
+      --bg: #f3efe4;
+      --surface: #fffcf6;
+      --line: #e0d9c8;
+      --gold: #f4ead0;
+      --win: #0e5c34;
+      --loss: #8b3a3a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(ellipse 80% 35% at 100% 0%, #dce9dc, transparent 60%), var(--bg);
+      padding: 12px;
+      line-height: 1.45;
+    }
+    .wrap { max-width: 880px; margin: 0 auto; }
+    .hero {
+      background: var(--pine);
+      color: white;
+      border-radius: 18px;
+      padding: 22px 24px;
+      margin-bottom: 14px;
+    }
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: .85;
+      font-weight: bold;
+    }
+    h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(28px, 6vw, 44px);
+      line-height: 1.05;
+      margin: 6px 0 4px;
+    }
+    .sub { opacity: .88; font-size: 14px; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 14px 0;
+    }
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 12px 8px;
+      text-align: center;
+    }
+    .stat strong {
+      display: block;
+      color: var(--pine);
+      font: bold 24px Georgia, serif;
+    }
+    .stat span {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+    }
+    .next {
+      background: var(--pine);
+      color: white;
+      border-radius: 16px;
+      padding: 18px;
+      margin: 14px 0;
+    }
+    .next h2 { font: 28px Georgia, serif; margin: 6px 0 4px; }
+    .next p { margin: 3px 0; font-size: 14px; }
+    .tag {
+      display: inline-block;
+      border-radius: 30px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: bold;
+      background: var(--gold);
+      color: var(--deep);
+    }
+    .actions, .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+    .btn {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 30px;
+      padding: 9px 14px;
+      font-size: 13px;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+    .btn.primary {
+      background: var(--pine);
+      border-color: var(--pine);
+      color: white;
+    }
+    .btn.active {
+      background: var(--pine);
+      border-color: var(--pine);
+      color: white;
+    }
+    .btn:disabled { opacity: .6; cursor: wait; }
+    .section-title {
+      font: 24px Georgia, serif;
+      color: var(--deep);
+      margin: 22px 0 10px;
+    }
+    .search {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .month {
+      font: 22px Georgia, serif;
+      color: var(--deep);
+      margin: 18px 0 8px;
+    }
+    .game {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 11px;
+      display: flex;
+      gap: 12px;
+      text-align: left;
+      align-items: center;
+      margin: 7px 0;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .game:hover { border-color: var(--pine); }
+    .datebox {
+      width: 52px;
+      flex: none;
+      text-align: center;
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 7px 4px;
+    }
+    .datebox small {
+      display: block;
+      color: var(--muted);
+      font-weight: bold;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+    .datebox b {
+      font: 22px Georgia, serif;
+      color: var(--deep);
+    }
+    .gameinfo { flex: 1; min-width: 0; }
+    .gameinfo strong { display: block; font-size: 15px; }
+    .gameinfo small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+    }
+    .site {
+      font-size: 10px;
+      font-weight: bold;
+      border-radius: 20px;
+      padding: 5px 8px;
+      color: white;
+      background: #2f4458;
+      white-space: nowrap;
+    }
+    .site.home { background: var(--pine); }
+    .star { color: #b28a2c; font-size: 16px; margin-left: 2px; }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+    .panel h3 {
+      font: 21px Georgia, serif;
+      margin: 0 0 12px;
+      color: var(--deep);
+    }
+    .rowdata {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+    }
+    .rowdata:last-child { border: 0; }
+    .rowdata span:first-child { color: var(--muted); }
+    .scrim {
+      width: 100%;
+      text-align: left;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 13px;
+      font-weight: bold;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .scrimlist {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 5px 14px;
+      margin-top: 8px;
+    }
+    .scrimitem {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+    }
+    .scrimitem:last-child { border: 0; }
+    .fine {
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+      padding: 18px 5px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #10201899;
+      z-index: 99999;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+    .modalbox {
+      background: var(--surface);
+      border-radius: 18px;
+      padding: 20px;
+      width: min(100%, 500px);
+      max-height: 90vh;
+      overflow: auto;
+      box-shadow: 0 15px 50px #0004;
+    }
+    .modalhead {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .modalbox h2 {
+      font: 28px Georgia, serif;
+      color: var(--deep);
+      margin: 4px 0;
+    }
+    .close {
+      border: 0;
+      background: var(--bg);
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .empty {
+      padding: 18px;
+      background: var(--surface);
+      border-radius: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .live-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 12px 0;
+    }
+    .live-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+    }
+    .live-card a {
+      display: block;
+      margin-top: 6px;
+      font-weight: bold;
+      color: var(--pine);
+      text-decoration: none;
+    }
+    .note-box {
+      background: #f8f4e8;
+      border-left: 4px solid var(--pine);
+      padding: 12px 14px;
+      border-radius: 0 10px 10px 0;
+      font-size: 13px;
+      margin: 12px 0;
+    }
+    .feed-status {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 6px 0 12px;
+    }
+    .feed-status.ok { color: var(--pine); }
+    .feed-status.err { color: #8b3a3a; }
+    .result-row {
+      display: grid;
+      grid-template-columns: 70px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+    }
+    .result-row:last-child { border-bottom: 0; }
+    .result-date {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: bold;
+      line-height: 1.3;
+    }
+    .result-opp { font-weight: bold; }
+    .result-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .score-display {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: bold;
+      font-size: 15px;
+    }
+    .wl-badge {
+      display: inline-block;
+      min-width: 28px;
+      text-align: center;
+      padding: 3px 7px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: bold;
+      color: white;
+    }
+    .wl-badge.W { background: var(--win); }
+    .wl-badge.L { background: var(--loss); }
+    .wl-badge.none { background: #ccc; color: #666; }
+    .results-help {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .roster-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .roster-card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .roster-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--pine);
+      color: white;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: none;
+      font-size: 14px;
+    }
+    .roster-name { font-weight: bold; font-size: 14px; }
+    .roster-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    .level-toggle {
+      display: flex;
+      gap: 0;
+      margin: 12px 0 4px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      overflow: hidden;
+      width: fit-content;
+    }
+    .level-toggle button {
+      border: 0;
+      background: transparent;
+      padding: 10px 22px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      color: var(--muted);
+    }
+    .level-toggle button.active {
+      background: var(--pine);
+      color: white;
+    }
+    @media (max-width: 520px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .live-links { grid-template-columns: 1fr; }
+      .rowdata { grid-template-columns: 100px 1fr; }
+      .result-row { grid-template-columns: 1fr; gap: 6px; }
+      body { padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="greenmen-app">
+    <div class="wrap">
+      <header class="hero">
+        <div class="eyebrow">Aurora High School</div>
+        <h1>Greenmen Basketball</h1>
+        <div class="sub">Boys JV &amp; Varsity · 2026–2027 · <span id="gm-level-label">JV</span></div>
+      </header>
+
+
+      <div class="level-toggle" id="gm-level-toggle" role="tablist" aria-label="Team level">
+        <button type="button" data-level="jv" class="active">JV</button>
+        <button type="button" data-level="varsity">Varsity</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong id="gm-total">21</strong><span>Games</span></div>
+        <div class="stat"><strong id="gm-home">11</strong><span>Home</span></div>
+        <div class="stat"><strong id="gm-away">10</strong><span>Away</span></div>
+        <div class="stat"><strong id="gm-record">0-0</strong><span>Record</span></div>
+      </div>
+
+      <section class="next">
+        <div class="eyebrow">Next on the board · <span id="gm-next-num">Game 1</span></div>
+        <h2 id="gm-next-name">Orange High School</h2>
+        <p id="gm-next-date">Tuesday, December 1, 2026 · Away · 5:30 PM</p>
+        <p><span class="tag" id="gm-next-note">Season opener</span></p>
+        <button class="btn" style="margin-top:10px;background:white;color:var(--pine)" id="gm-next-details">View game details →</button>
+      </section>
+
+      <h2 class="section-title">Scores · Streams · Stats</h2>
+      <div class="live-links">
+        <div class="live-card">
+          <div style="font-size:22px">🏆</div>
+          <strong>JV Scores & Stats</strong>
+          <a href="https://www.maxpreps.com/oh/aurora/aurora-greenmen/basketball/jv/" target="_blank" rel="noopener" id="gm-link-maxpreps">MaxPreps Page →</a>
+        </div>
+        <div class="live-card">
+          <div style="font-size:22px">📺</div>
+          <strong>Live Streams</strong>
+          <a href="https://www.nfhsnetwork.com/schools/aurora-high-school-aurora-oh/basketball" target="_blank" rel="noopener">NFHS Network →</a>
+        </div>
+        <div class="live-card">
+          <div style="font-size:22px">📈</div>
+          <strong>Ohio Live Scoreboard</strong>
+          <a href="https://www.maxpreps.com/oh/ohio/basketball/scores/" target="_blank" rel="noopener">Statewide Scores →</a>
+        </div>
+        <div class="live-card">
+          <div style="font-size:22px">📋</div>
+          <strong>Full Schedule</strong>
+          <a href="https://www.maxpreps.com/oh/aurora/aurora-greenmen/basketball/jv/schedule/" target="_blank" rel="noopener" id="gm-link-schedule">MaxPreps Schedule →</a>
+        </div>
+      </div>
+
+      <div class="note-box" id="gm-status-note">
+        <strong>Scores:</strong> Loaded from the shared Google Sheet when available. Tap <b>Refresh scores</b> after a game (or any time) to pull the latest finals. First regular-season game: Dec 1.
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" id="gm-refresh">↻ Refresh scores</button>
+        <a class="btn" href="https://www.maxpreps.com/oh/aurora/aurora-greenmen/basketball/jv/" target="_blank" rel="noopener">MaxPreps JV</a>
+        <a class="btn" href="https://www.nfhsnetwork.com/schools/aurora-high-school-aurora-oh/basketball" target="_blank" rel="noopener">▶ Streams</a>
+        <a class="btn" href="tel:3309542008">☎ Athletics</a>
+      </div>
+      <p class="feed-status" id="gm-feed-status">Scores not loaded yet.</p>
+
+      <h2 class="section-title">Results</h2>
+      <p class="results-help">Finals come from the shared score sheet (updated by the team / family). Refresh to pull the latest. You can still mark games you’re attending below.</p>
+      <div class="panel" style="padding:12px 16px">
+        <div id="gm-results"></div>
+      </div>
+
+      <h2 class="section-title">2026–2027 Schedule</h2>
+      <input class="search" id="gm-search" type="search" placeholder="Search opponents…" aria-label="Search opponents">
+      <div class="filters" id="gm-filters">
+        <button class="btn active" data-filter="all">All</button>
+        <button class="btn" data-filter="home">Home</button>
+        <button class="btn" data-filter="away">Away</button>
+        <button class="btn" data-filter="league">League</button>
+        <button class="btn" data-filter="themes">Theme Nights</button>
+        <button class="btn" data-filter="going">Going (0)</button>
+      </div>
+      <div id="gm-schedule"></div>
+
+      <section style="margin-top:22px">
+        <button class="scrim" id="gm-scrim-toggle">🏀 Preseason Scrimmages <span style="float:right">＋</span></button>
+        <div class="scrimlist" id="gm-scrims">
+          <div class="scrimitem"><b>Wed, Nov 18 · Hoban</b><br>5:30 PM · Aurora — Auxiliary Gym</div>
+          <div class="scrimitem"><b>Fri, Nov 20 · Margaretta</b><br>6:00 PM · Away</div>
+          <div class="scrimitem"><b>Tue, Nov 24 · Woodridge</b><br>5:30 PM · Away — Woodridge Main Gym</div>
+          <div class="scrimitem"><b>Fri, Nov 27 · Newton Falls</b><br>11:30 AM · Aurora High School</div>
+        </div>
+      </section>
+
+
+      <h2 class="section-title">Roster</h2>
+      <div class="actions" style="margin-top:0;margin-bottom:8px">
+        <button class="btn primary" id="gm-refresh-roster">↻ Refresh roster</button>
+        <a class="btn" href="https://www.maxpreps.com/oh/aurora/aurora-greenmen/basketball/jv/roster/" target="_blank" rel="noopener" id="gm-link-roster">MaxPreps roster</a>
+      </div>
+      <p class="feed-status" id="gm-roster-status">Roster not loaded yet.</p>
+      <div class="panel" style="padding:14px 16px">
+        <div id="gm-roster"></div>
+      </div>
+
+      <section class="panel">
+        <h3>Team Information</h3>
+        <div class="rowdata"><span>School</span><b>Aurora High School</b></div>
+        <div class="rowdata"><span>Address</span><b>109 W. Pioneer Trail, Aurora, OH 44202</b></div>
+        <div class="rowdata"><span>Athletic office</span><b>(330) 954-2008</b></div>
+        <div class="rowdata"><span>Head coach</span><b>Coach Young</b></div>
+        <div class="rowdata"><span>Assistants</span><b>Tim Keyes · Austin Nupp · Jay Gerrick</b></div>
+        <div class="rowdata"><span>League</span><b>Suburban League — American Conference</b></div>
+        <div class="rowdata"><span>Home court</span><b>Aurora High School Gymnasium</b></div>
+        <div class="rowdata"><span>Colors</span><b>Green &amp; White</b></div>
+        <a class="btn primary" style="margin-top:14px" href="tel:3309542008">☎ Call Athletics</a>
+        <p class="fine" style="margin-top:14px">
+          Schedule from the official family sheet. Scores are maintained in a shared Google Sheet and loaded by this page. Ticket/address links are convenience only — confirm with the host school.
+        </p>
+      </section>
+
+      <div class="footer">
+        AURORA GREENMEN JV BASKETBALL · 2026–2027<br>
+        Green &amp; White · Family Schedule + Live Score Feed
+      </div>
+    </div>
+
+    <div class="modal" id="gm-modal" role="dialog" aria-modal="true">
+      <div class="modalbox">
+        <div class="modalhead">
+          <div>
+            <div class="eyebrow" style="color:var(--muted)">Game details</div>
+            <h2 id="gm-modal-title">Opponent</h2>
+            <div id="gm-modal-date" style="font-size:13px;color:var(--muted)"></div>
+          </div>
+          <button class="close" id="gm-close" aria-label="Close">×</button>
+        </div>
+        <div id="gm-modal-info" style="margin:15px 0;font-size:13px;line-height:1.6"></div>
+        <div class="actions" id="gm-modal-actions"></div>
+        <p class="fine">Home games: Aurora High School, 109 W. Pioneer Trail, Aurora, OH 44202. Confirm venue and tickets with the host school.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    /* ============================================================
+       CONFIG – paste your Google Apps Script Web App URL here
+       ============================================================ */
+    const SCORE_FEED_URL = 'PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+    // Example: 'https://script.google.com/macros/s/AKfycbx.../exec'
+
+    let level = 'jv'; // 'jv' | 'varsity'
+
+    const LINKS = {
+      jv: {
+        maxpreps: 'https://www.maxpreps.com/oh/aurora/aurora-greenmen/basketball/jv/',
+        schedule: 'https://www.maxpreps.com/oh/aurora/aurora-greenmen/basketball/jv/schedule/',
+        roster: 'https://www.maxpreps.com/oh/aurora/aurora-greenmen/basketball/jv/roster/'
+      },
+      varsity: {
+        maxpreps: 'https://www.maxpreps.com/oh/aurora/aurora-greenmen/basketball/',
+        schedule: 'https://www.maxpreps.com/oh/aurora/aurora-greenmen/basketball/schedule/',
+        roster: 'https://www.maxpreps.com/oh/aurora/aurora-greenmen/basketball/roster/'
+      }
+    };
+
+    const JV_GAMES = [
+      {id:1,date:'2026-12-01',day:'Tue',opponent:'Orange High School',site:'AWAY',tip:'5:30 PM',note:'Season opener',address:'32000 Chagrin Blvd, Pepper Pike, OH 44124',tickets:'https://www.nfhsnetwork.com/schools/orange-pepper-pike-oh',ticketLabel:'Athletics'},
+      {id:2,date:'2026-12-04',day:'Fri',opponent:'South High School',site:'HOME',tip:'6:00 PM',note:'Home opener'},
+      {id:3,date:'2026-12-08',day:'Tue',opponent:'Chagrin Falls',site:'HOME',tip:'6:00 PM',note:'Non-conference'},
+      {id:4,date:'2026-12-11',day:'Fri',opponent:'Cuyahoga Falls',site:'AWAY',tip:'6:00 PM',note:'Suburban League',address:'2300 4th St, Cuyahoga Falls, OH 44221',tickets:'https://cfallsathletics.org/',ticketLabel:'Athletics'},
+      {id:5,date:'2026-12-15',day:'Tue',opponent:'Revere High School',site:'AWAY',tip:'6:00 PM',note:'Suburban League',address:'3420 Everett Rd, Richfield, OH 44286',tickets:'https://events.hometownticketing.com/boxoffice/revereschools/entity/schools/4',ticketLabel:'Tickets'},
+      {id:6,date:'2026-12-18',day:'Fri',opponent:'Kenston High School',site:'AWAY',tip:'5:30 PM',note:'Suburban League',address:'9500 Bainbridge Rd, Chagrin Falls, OH 44023',tickets:'https://gofan.co/app/school/OH1225',ticketLabel:'GoFan'},
+      {id:7,date:'2026-12-22',day:'Tue',opponent:'Firestone High School',site:'HOME',tip:'6:00 PM',note:'Non-conference'},
+      {id:8,date:'2026-12-28',day:'Mon',opponent:'North Royalton',site:'AWAY',tip:'6:00 PM',note:'Non-conference',address:'14713 Ridge Rd, North Royalton, OH 44133',tickets:'https://events.hometownticketing.com/boxoffice/northroyaltonsd/entity/schools/2',ticketLabel:'Tickets'},
+      {id:9,date:'2027-01-05',day:'Tue',opponent:'Nordonia High School',site:'HOME',tip:'6:00 PM',note:'Suburban League'},
+      {id:10,date:'2027-01-08',day:'Fri',opponent:'Barberton High School',site:'AWAY',tip:'6:15 PM',note:'Suburban League',address:'555 Barber Rd, Barberton, OH 44203',tickets:'https://events.hometownticketing.com/boxoffice/barbertonmagics/entity/schools/1',ticketLabel:'Tickets'},
+      {id:11,date:'2027-01-12',day:'Tue',opponent:'Copley High School',site:'HOME',tip:'6:00 PM',note:'Black Out Night',theme:true},
+      {id:12,date:'2027-01-15',day:'Fri',opponent:'Mayfield High School',site:'HOME',tip:'6:00 PM',note:'HMS Night',theme:true},
+      {id:13,date:'2027-01-19',day:'Tue',opponent:'Crestwood High School',site:'HOME',tip:'6:00 PM',note:'Non-conference'},
+      {id:14,date:'2027-01-21',day:'Thu',opponent:'Twinsburg High School',site:'HOME',tip:'6:00 PM',note:'Non-conference'},
+      {id:15,date:'2027-01-26',day:'Tue',opponent:'Kent Roosevelt',site:'AWAY',tip:'6:00 PM',note:'League rivalry',address:'1400 N Mantua St, Kent, OH 44240',tickets:'https://events.hometownticketing.com/boxoffice/kentschools',ticketLabel:'Tickets'},
+      {id:16,date:'2027-01-29',day:'Fri',opponent:'Revere High School',site:'HOME',tip:'6:00 PM',note:'Suburban League'},
+      {id:17,date:'2027-02-02',day:'Tue',opponent:'Nordonia High School',site:'AWAY',tip:'6:00 PM',note:'Suburban League',address:'8006 S Bedford Rd, Macedonia, OH 44056',tickets:'https://events.hometownticketing.com/boxoffice/nordoniaschools/entity/schools/5',ticketLabel:'Tickets'},
+      {id:18,date:'2027-02-05',day:'Fri',opponent:'Kenston High School',site:'HOME',tip:'6:00 PM',note:'Youth Night',theme:true},
+      {id:19,date:'2027-02-09',day:'Tue',opponent:'Copley High School',site:'AWAY',tip:'6:00 PM',note:'Suburban League',address:'3807 Ridgewood Rd, Copley, OH 44321',tickets:'https://events.hometownticketing.com/boxoffice/copley-fairlawn/entity/schools/2',ticketLabel:'Tickets'},
+      {id:20,date:'2027-02-12',day:'Fri',opponent:'Barberton High School',site:'HOME',tip:'6:00 PM',note:'Senior Night',theme:true},
+      {id:21,date:'2027-02-19',day:'Fri',opponent:'Twinsburg High School',site:'AWAY',tip:'6:00 PM',note:'Season finale',address:'10084 Ravenna Rd, Twinsburg, OH 44087',tickets:'https://events.hometownticketing.com/boxoffice/twinsburg/entity/schools/1',ticketLabel:'Tickets'}
+    ];
+
+    const VARSITY_GAMES = [
+      {id:1,date:'2026-12-01',day:'Tue',opponent:'Orange High School',site:'AWAY',tip:'7:00 PM',note:'Season opener',address:'32000 Chagrin Blvd, Pepper Pike, OH 44124'},
+      {id:2,date:'2026-12-04',day:'Fri',opponent:'South High School',site:'HOME',tip:'7:00 PM',note:'Home opener'},
+      {id:3,date:'2026-12-08',day:'Tue',opponent:'Chagrin Falls',site:'HOME',tip:'7:00 PM',note:'Non-conference'},
+      {id:4,date:'2026-12-11',day:'Fri',opponent:'Cuyahoga Falls',site:'AWAY',tip:'7:00 PM',note:'Suburban League',address:'2300 4th St, Cuyahoga Falls, OH 44221'},
+      {id:5,date:'2026-12-15',day:'Tue',opponent:'Revere High School',site:'AWAY',tip:'7:00 PM',note:'Suburban League',address:'3420 Everett Rd, Richfield, OH 44286'},
+      {id:6,date:'2026-12-18',day:'Fri',opponent:'Kenston High School',site:'AWAY',tip:'7:00 PM',note:'Suburban League',address:'9500 Bainbridge Rd, Chagrin Falls, OH 44023'},
+      {id:7,date:'2026-12-22',day:'Tue',opponent:'Firestone High School',site:'HOME',tip:'7:00 PM',note:'Non-conference'},
+      {id:8,date:'2026-12-28',day:'Mon',opponent:'North Royalton',site:'AWAY',tip:'7:00 PM',note:'Non-conference',address:'14713 Ridge Rd, North Royalton, OH 44133'},
+      {id:9,date:'2027-01-05',day:'Tue',opponent:'Nordonia High School',site:'HOME',tip:'7:00 PM',note:'Suburban League'},
+      {id:10,date:'2027-01-08',day:'Fri',opponent:'Barberton High School',site:'AWAY',tip:'7:30 PM',note:'Suburban League',address:'555 Barber Rd, Barberton, OH 44203'},
+      {id:11,date:'2027-01-12',day:'Tue',opponent:'Copley High School',site:'HOME',tip:'7:00 PM',note:'Suburban League'},
+      {id:12,date:'2027-01-15',day:'Fri',opponent:'Mayfield High School',site:'HOME',tip:'7:00 PM',note:'Non-conference'},
+      {id:13,date:'2027-01-19',day:'Tue',opponent:'Crestwood High School',site:'HOME',tip:'7:00 PM',note:'Non-conference'},
+      {id:14,date:'2027-01-21',day:'Thu',opponent:'Twinsburg High School',site:'HOME',tip:'7:00 PM',note:'Non-conference'},
+      {id:15,date:'2027-01-26',day:'Tue',opponent:'Kent Roosevelt',site:'AWAY',tip:'7:00 PM',note:'League rivalry',address:'1400 N Mantua St, Kent, OH 44240'},
+      {id:16,date:'2027-01-29',day:'Fri',opponent:'Revere High School',site:'HOME',tip:'7:00 PM',note:'Suburban League'},
+      {id:17,date:'2027-02-05',day:'Fri',opponent:'Kenston High School',site:'HOME',tip:'7:00 PM',note:'Suburban League'},
+      {id:18,date:'2027-02-09',day:'Tue',opponent:'Nordonia High School',site:'AWAY',tip:'7:00 PM',note:'Suburban League',address:'8006 S Bedford Rd, Macedonia, OH 44056'},
+      {id:19,date:'2027-02-12',day:'Fri',opponent:'Barberton High School',site:'HOME',tip:'7:00 PM',note:'Suburban League'},
+      {id:20,date:'2027-02-16',day:'Tue',opponent:'Copley High School',site:'AWAY',tip:'7:00 PM',note:'Suburban League',address:'3807 Ridgewood Rd, Copley, OH 44321'},
+      {id:21,date:'2027-02-19',day:'Fri',opponent:'Mayfield High School',site:'AWAY',tip:'7:00 PM',note:'Non-conference'},
+      {id:22,date:'2027-02-26',day:'Fri',opponent:'Twinsburg High School',site:'AWAY',tip:'7:00 PM',note:'Season finale',address:'10084 Ravenna Rd, Twinsburg, OH 44087'}
+    ];
+
+    let games = JV_GAMES;
+
+    const root = document.getElementById('greenmen-app');
+    if (!root) return;
+    const $ = id => root.querySelector('#' + id);
+
+    let filter = 'all', search = '', going = [];
+    let results = {};
+
+    try { going = JSON.parse(localStorage.getItem('greenmen-going-' + level) || '[]'); } catch(e) { going = []; }
+
+    const fmt = (iso, opts) => new Date(iso + 'T12:00:00').toLocaleDateString('en-US', opts);
+    const month = iso => fmt(iso, {month:'long', year:'numeric'});
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const mapLink = a => 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(a);
+
+    function loadGoing() {
+      try { going = JSON.parse(localStorage.getItem('greenmen-going-' + level) || '[]'); } catch(e) { going = []; }
+    }
+    function saveGoing() {
+      try { localStorage.setItem('greenmen-going-' + level, JSON.stringify(going)); } catch(e) {}
+    }
+
+    function getRecord() {
+      let w = 0, l = 0;
+      Object.keys(results).forEach(id => {
+        const r = results[id];
+        if (r && r.us != null && r.them != null) {
+          if (r.us > r.them) w++;
+          else if (r.us < r.them) l++;
+        }
+      });
+      return { w, l, text: w + '-' + l };
+    }
+
+    function updateRecordDisplay() {
+      $('gm-record').textContent = getRecord().text;
+    }
+
+    function getNextGame() {
+      return games.find(g => !(results[g.id] && results[g.id].us != null && results[g.id].them != null)) || games[games.length - 1];
+    }
+
+    function updateNext() {
+      const next = getNextGame();
+      const idx = games.findIndex(g => g.id === next.id) + 1;
+      $('gm-next-num').textContent = 'Game ' + idx;
+      $('gm-next-name').textContent = next.opponent;
+      $('gm-next-date').textContent = fmt(next.date, {weekday:'long', month:'long', day:'numeric', year:'numeric'}) + ' · ' + (next.site === 'HOME' ? 'Home' : 'Away') + ' · ' + next.tip;
+      $('gm-next-note').textContent = next.note;
+      return next;
+    }
+
+    function setFeedStatus(msg, cls) {
+      const el = $('gm-feed-status');
+      el.textContent = msg;
+      el.className = 'feed-status' + (cls ? ' ' + cls : '');
+    }
+
+    function feedUrl(action) {
+      const url = (SCORE_FEED_URL || '').trim();
+      if (!url || url.indexOf('PASTE_YOUR') === 0 || url.indexOf('http') !== 0) return null;
+      // cache-bust so Sheet edits show up immediately after Refresh
+      return url + (url.indexOf('?') >= 0 ? '&' : '?') + 'action=' + encodeURIComponent(action) +
+        '&level=' + encodeURIComponent(level) + '&_ts=' + Date.now();
+    }
+
+    async function loadScores(showWorking) {
+      const endpoint = feedUrl('scores');
+      if (!endpoint) {
+        setFeedStatus('Score feed not configured yet. Add SCORE_FEED_URL in the HTML.', 'err');
+        renderResults(); updateRecordDisplay(); updateNext(); render();
+        return;
+      }
+      const btn = $('gm-refresh');
+      if (showWorking) { btn.disabled = true; btn.textContent = 'Refreshing…'; }
+      setFeedStatus('Loading ' + level + ' scores…');
+      try {
+        const res = await fetch(endpoint, { method: 'GET', redirect: 'follow' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        results = {};
+        Object.keys(data.results || {}).forEach(k => { results[Number(k)] = data.results[k]; });
+        const when = data.updated ? new Date(data.updated).toLocaleString() : 'just now';
+        setFeedStatus((level === 'varsity' ? 'Varsity' : 'JV') + ' scores · Record ' + (data.record || getRecord().text) + ' · Updated ' + when, 'ok');
+        updateRecordDisplay(); updateNext(); renderResults(); render();
+      } catch (err) {
+        setFeedStatus('Could not load scores (' + (err.message || 'network') + ').', 'err');
+        renderResults(); updateRecordDisplay(); updateNext(); render();
+      } finally {
+        if (showWorking) { btn.disabled = false; btn.textContent = '↻ Refresh scores'; }
+      }
+    }
+
+    async function loadRoster(showWorking) {
+      const status = $('gm-roster-status');
+      const box = $('gm-roster');
+      if (!status || !box) return;
+      const endpoint = feedUrl('roster');
+      if (!endpoint) {
+        status.textContent = 'Roster feed not configured.';
+        status.className = 'feed-status err';
+        box.innerHTML = '<div class="empty">Add SCORE_FEED_URL and set up Roster sheets in Google Sheets.</div>';
+        return;
+      }
+      const btn = $('gm-refresh-roster');
+      if (showWorking && btn) { btn.disabled = true; btn.textContent = 'Refreshing…'; }
+      status.textContent = 'Loading ' + level + ' roster…';
+      status.className = 'feed-status';
+      try {
+        const res = await fetch(endpoint, { method: 'GET', redirect: 'follow', cache: 'no-store' });
+        const text = await res.text();
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (parseErr) {
+          throw new Error('Not JSON (is the Web App deployed? access Anyone?). ' + text.slice(0, 80));
+        }
+        if (!res.ok && data.error) throw new Error(data.error);
+        if (data.error && !data.players) throw new Error(data.error);
+        const players = data.players || [];
+        if (!players.length) {
+          status.textContent = data.message || 'No players yet.';
+          status.className = 'feed-status';
+          box.innerHTML = '<div class="empty">' + esc(data.message || 'Add players in the Sheet Roster tab (row 1 headers: number, name, grade, position). Then tap Refresh roster.') + '</div>';
+        } else {
+          const when = data.updated ? new Date(data.updated).toLocaleString() : 'just now';
+          status.textContent = (level === 'varsity' ? 'Varsity' : 'JV') + ' · ' + players.length + ' players · Updated ' + when;
+          status.className = 'feed-status ok';
+          box.innerHTML = '<div class="roster-grid">' + players.map(p => {
+            const meta = [p.grade, p.position, p.height].filter(Boolean).join(' · ');
+            return '<div class="roster-card"><div class="roster-num">' + esc(p.number || '—') + '</div><div><div class="roster-name">' + esc(p.name) + '</div>' +
+              (meta ? '<div class="roster-meta">' + esc(meta) + '</div>' : '') + '</div></div>';
+          }).join('') + '</div>';
+        }
+      } catch (err) {
+        status.textContent = 'Could not load roster (' + (err.message || 'network') + ').';
+        status.className = 'feed-status err';
+        box.innerHTML = '<div class="empty">1) SCORE_FEED_URL must be your /exec Web App URL<br>2) Deploy with access <b>Anyone</b><br>3) Sheet tab name <b>Roster</b> (JV) or <b>Varsity_Roster</b><br>4) After editing Apps Script, create a <b>New version</b> deployment</div>';
+      } finally {
+        if (showWorking && btn) { btn.disabled = false; btn.textContent = '↻ Refresh roster'; }
+      }
+    }
+
+    function renderResults() {
+      const withScores = games.filter(g => results[g.id] && results[g.id].us != null);
+      const upcoming = games.filter(g => !(results[g.id] && results[g.id].us != null)).slice(0, 5);
+      const toShow = [];
+      const seen = new Set();
+      [...withScores, ...upcoming].forEach(g => { if (!seen.has(g.id)) { seen.add(g.id); toShow.push(g); } });
+      if (!toShow.length) toShow.push(...games.slice(0, 5));
+      toShow.sort((a, b) => a.date.localeCompare(b.date));
+      let html = '';
+      toShow.forEach(g => {
+        const r = results[g.id];
+        const has = r && r.us != null && r.them != null;
+        let scoreHtml = '<span style="color:var(--muted);font-weight:normal">—</span>';
+        let wl = 'none';
+        if (has) {
+          wl = r.us > r.them ? 'W' : (r.us < r.them ? 'L' : 'none');
+          scoreHtml = '<span class="wl-badge ' + wl + '">' + (wl === 'none' ? 'T' : wl) + '</span> <span>' + r.us + ' – ' + r.them + '</span>';
+        }
+        html += '<div class="result-row"><div class="result-date">' + g.day + '<br>' + Number(g.date.slice(8,10)) + ' ' + fmt(g.date, {month:'short'}) +
+          '</div><div><div class="result-opp">' + esc(g.opponent) + '</div><div class="result-meta">' +
+          (g.site === 'HOME' ? 'Home' : 'Away') + ' · ' + esc(g.tip) + (g.note ? ' · ' + esc(g.note) : '') +
+          '</div></div><div class="score-display">' + scoreHtml + '</div></div>';
+      });
+      $('gm-results').innerHTML = html || '<div class="empty">No games.</div>';
+    }
+
+    function render() {
+      let list = games.filter(g =>
+        (filter === 'all' ||
+         (filter === 'home' && g.site === 'HOME') ||
+         (filter === 'away' && g.site === 'AWAY') ||
+         (filter === 'league' && (g.note.toLowerCase().includes('league') || g.note.toLowerCase().includes('rivalry'))) ||
+         (filter === 'themes' && g.theme) ||
+         (filter === 'going' && going.includes(g.id))) &&
+        g.opponent.toLowerCase().includes(search)
+      );
+      let groups = {};
+      list.forEach(g => (groups[month(g.date)] ??= []).push(g));
+      let html = '';
+      Object.keys(groups).forEach(m => {
+        html += '<h3 class="month">' + esc(m) + '</h3>';
+        groups[m].forEach(g => {
+          const r = results[g.id];
+          const has = r && r.us != null && r.them != null;
+          let scoreHtml = '';
+          if (has) {
+            const wl = r.us > r.them ? 'W' : (r.us < r.them ? 'L' : '');
+            scoreHtml = ' <span style="font-size:12px;color:var(--muted)">(' + r.us + '–' + r.them + (wl ? ' ' + wl : '') + ')</span>';
+          }
+          html += '<button class="game" data-game="' + g.id + '">' +
+            '<span class="datebox"><small>' + g.day + '</small><b>' + Number(g.date.slice(8,10)) + '</b></span>' +
+            '<span class="gameinfo"><strong>' + esc(g.opponent) + scoreHtml + '</strong><small>' + esc(g.tip + ' · ' + g.note) + '</small></span>' +
+            '<span class="site ' + (g.site === 'HOME' ? 'home' : '') + '">' + g.site + '</span>' +
+            (going.includes(g.id) ? '<span class="star">★</span>' : '') + '</button>';
+        });
+      });
+      $('gm-schedule').innerHTML = html || '<div class="empty">No games match this filter.</div>';
+      root.querySelectorAll('[data-game]').forEach(b => b.addEventListener('click', () => openGame(Number(b.dataset.game))));
+      const goingBtn = root.querySelector('[data-filter="going"]');
+      if (goingBtn) goingBtn.textContent = 'Going (' + going.length + ')';
+      root.querySelectorAll('[data-filter]').forEach(b => b.classList.toggle('active', b.dataset.filter === filter));
+    }
+
+    function openGame(id) {
+      const g = games.find(x => x.id === id);
+      if (!g) return;
+      $('gm-modal-title').textContent = g.opponent;
+      $('gm-modal-date').textContent = fmt(g.date, {weekday:'long', month:'long', day:'numeric', year:'numeric'}) + ' · ' + g.tip + ' tip';
+      let info = '<span class="tag">' + g.site + '</span> &nbsp; <b>' + esc(g.note) + '</b>';
+      const r = results[g.id];
+      if (r && r.us != null && r.them != null) {
+        const wl = r.us > r.them ? 'Win' : (r.us < r.them ? 'Loss' : 'Tie');
+        info += '<p style="margin-top:10px"><b>Final:</b> Aurora ' + r.us + ' – ' + r.them + ' (' + wl + ')</p>';
+      }
+      if (g.address) info += '<p style="margin-top:10px"><b>Away venue</b><br>' + esc(g.address) + '</p>';
+      $('gm-modal-info').innerHTML = info;
+      let actions = '<button class="btn primary" id="gm-going">' + (going.includes(id) ? '★ On my list' : '☆ I’m going') + '</button>';
+      if (g.address) actions += '<a class="btn" target="_blank" rel="noopener" href="' + mapLink(g.address) + '">📍 Directions</a>';
+      if (g.tickets) actions += '<a class="btn" target="_blank" rel="noopener" href="' + esc(g.tickets) + '">🎟 ' + esc(g.ticketLabel || 'Tickets') + '</a>';
+      actions += '<a class="btn" target="_blank" rel="noopener" href="' + LINKS[level].maxpreps + '">🏆 MaxPreps</a>';
+      actions += '<a class="btn" target="_blank" rel="noopener" href="https://www.nfhsnetwork.com/schools/aurora-high-school-aurora-oh/basketball">▶ Stream</a>';
+      $('gm-modal-actions').innerHTML = actions;
+      $('gm-modal').style.display = 'flex';
+      $('gm-going').addEventListener('click', () => {
+        going = going.includes(id) ? going.filter(n => n !== id) : [...going, id];
+        saveGoing();
+        render();
+        openGame(id);
+      });
+    }
+
+    function setLevel(next) {
+      level = next === 'varsity' ? 'varsity' : 'jv';
+      games = level === 'varsity' ? VARSITY_GAMES : JV_GAMES;
+      results = {};
+      loadGoing();
+      const label = $('gm-level-label');
+      if (label) label.textContent = level === 'varsity' ? 'Varsity' : 'JV';
+      root.querySelectorAll('#gm-level-toggle [data-level]').forEach(b => b.classList.toggle('active', b.dataset.level === level));
+      const L = LINKS[level];
+      ['gm-link-maxpreps','gm-link-schedule','gm-link-roster'].forEach((id, i) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.href = i === 0 ? L.maxpreps : i === 1 ? L.schedule : L.roster;
+      });
+      $('gm-total').textContent = games.length;
+      $('gm-home').textContent = games.filter(g => g.site === 'HOME').length;
+      $('gm-away').textContent = games.filter(g => g.site === 'AWAY').length;
+      updateRecordDisplay();
+      updateNext();
+      renderResults();
+      render();
+      loadScores(false);
+      loadRoster(false);
+    }
+
+    // Init
+    $('gm-total').textContent = games.length;
+    $('gm-home').textContent = games.filter(g => g.site === 'HOME').length;
+    $('gm-away').textContent = games.filter(g => g.site === 'AWAY').length;
+    updateRecordDisplay();
+    updateNext();
+    renderResults();
+    render();
+
+    const levelToggle = $('gm-level-toggle');
+    if (levelToggle) {
+      levelToggle.addEventListener('click', e => {
+        const b = e.target.closest('[data-level]');
+        if (b) setLevel(b.dataset.level);
+      });
+    }
+    loadScores(false);
+    loadRoster(false);
+
+    $('gm-refresh').addEventListener('click', () => loadScores(true));
+    const rosterBtn = $('gm-refresh-roster');
+    if (rosterBtn) rosterBtn.addEventListener('click', () => loadRoster(true));
+    $('gm-next-details').addEventListener('click', () => openGame(getNextGame().id));
+    $('gm-close').addEventListener('click', () => $('gm-modal').style.display = 'none');
+    $('gm-modal').addEventListener('click', e => { if (e.target === $('gm-modal')) $('gm-modal').style.display = 'none'; });
+    $('gm-search').addEventListener('input', e => { search = e.target.value.toLowerCase().trim(); render(); });
+    $('gm-filters').addEventListener('click', e => {
+      const b = e.target.closest('[data-filter]');
+      if (b) { filter = b.dataset.filter; render(); }
+    });
+    $('gm-scrim-toggle').addEventListener('click', () => {
+      const p = $('gm-scrims');
+      p.style.display = p.style.display === 'block' ? 'none' : 'block';
+    });
+  })();
+  </script></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./sw.js').catch(function (e) {
+          console.warn('SW register failed', e);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

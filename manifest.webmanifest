@@ -1,0 +1,25 @@
+{
+  "name": "Aurora Greenmen Basketball",
+  "short_name": "Greenmen",
+  "description": "Aurora High School JV & Varsity basketball schedules, scores, and roster",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0e5c34",
+  "theme_color": "#0e5c34",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
